@@ -1,0 +1,13 @@
+.App {
+    text-align: center;
+}
+
+.icons-global-class-name {
+    font-size: 100%;
+    color: #505050;
+}
+
+.icons-message-class-name {
+    font-size: 140%;
+    color: inherit;
+}
