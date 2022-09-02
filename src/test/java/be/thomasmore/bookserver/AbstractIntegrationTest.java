@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -16,11 +18,22 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 @ContextConfiguration
 public abstract class AbstractIntegrationTest {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     protected ObjectMapper mapper;
+
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @Autowired
+    protected MockMvc mockMvc;
+
+    protected MockHttpServletRequestBuilder getMockRequestGetBooks(String url) {
+        return MockMvcRequestBuilders
+                .get(url)
+                .contentType(MediaType.APPLICATION_JSON);
+    }
 
     protected MockHttpServletRequestBuilder getMockRequestPostBooks(BookDetailedDTO NEW_BOOK_DTO) throws JsonProcessingException {
         return MockMvcRequestBuilders.post("/api/books/")

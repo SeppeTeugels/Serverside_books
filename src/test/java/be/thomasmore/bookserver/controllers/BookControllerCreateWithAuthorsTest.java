@@ -8,13 +8,13 @@ import be.thomasmore.bookserver.repositories.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.context.jdbc.Sql;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,11 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Even if the client (frontend) passes an author-array, the relation is NOT updated.
  */
 
+@SuppressWarnings("SpringTestingSqlInspection")
+@Sql(scripts = {"/sql/books/create_2_books.sql", "/sql/authors/create_2_authors.sql"})
+@Sql(scripts = {"/sql/books/clean_books.sql", "/sql/authors/clean_authors.sql"}, executionPhase = AFTER_TEST_METHOD)
 public class BookControllerCreateWithAuthorsTest extends AbstractIntegrationTest {
-
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired
-    private MockMvc mockMvc;
 
     @Autowired
     private BookRepository bookRepository;
@@ -38,16 +37,14 @@ public class BookControllerCreateWithAuthorsTest extends AbstractIntegrationTest
     @WithMockUser
     @Transactional
     public void createBookWithAuthorIdShouldNotSetTheRelation() throws Exception {
-        final String BOOK_TITLE = "createBookWithAuthor";
-        final int AUTHOR_ID = 1;
-        AuthorDTO authorDTO = AuthorDTO.builder().id(AUTHOR_ID).build(); //assumption author 1 exists (othersw
+        final String BOOK_TITLE = "Create a book with an author id";
+        AuthorDTO authorDto = AuthorDTO.builder().id(1).build(); // author 1 exists
         BookDetailedDTO newBookDto = BookDetailedDTO.builder()
                 .title(BOOK_TITLE)
-                .authors(List.of(authorDTO))
+                .authors(List.of(authorDto))
                 .build();
-        MockHttpServletRequestBuilder mockRequest = getMockRequestPostBooks(newBookDto);
 
-        mockMvc.perform(mockRequest)
+        mockMvc.perform(getMockRequestPostBooks(newBookDto))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.authors").isEmpty());
 
@@ -63,17 +60,15 @@ public class BookControllerCreateWithAuthorsTest extends AbstractIntegrationTest
     @WithMockUser
     @Transactional
     public void createBookWithFilledAuthorDTOShouldNotSetTheRelation() throws Exception {
-        final String BOOK_TITLE = "createBookWithFilledAuthorDTO";
-        final int AUTHOR_ID = 1;
-        final String AUTHOR_NAME = "Adrian Van Hoof";
-        AuthorDTO authorDTO = AuthorDTO.builder().id(AUTHOR_ID).name(AUTHOR_NAME).build();
+        final String BOOK_TITLE = "Create a book with a filled author object";
+        final String AUTHOR_NAME = "Adrian Vandenhoof";
+        AuthorDTO authorDTO = AuthorDTO.builder().id(1).name(AUTHOR_NAME).build();
         BookDetailedDTO newBookDto = BookDetailedDTO.builder()
                 .title(BOOK_TITLE)
                 .authors(List.of(authorDTO))
                 .build();
-        MockHttpServletRequestBuilder mockRequest = getMockRequestPostBooks(newBookDto);
 
-        mockMvc.perform(mockRequest)
+        mockMvc.perform(getMockRequestPostBooks(newBookDto))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.authors").isEmpty());
 
