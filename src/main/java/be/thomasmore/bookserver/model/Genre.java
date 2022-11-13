@@ -12,8 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 public class Genre {
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genre_generator")
-    @SequenceGenerator(name = "genre_generator", sequenceName = "genre_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     int id;
     @NotBlank(message="Genre name should not be blank") @NotNull

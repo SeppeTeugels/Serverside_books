@@ -17,8 +17,7 @@ import java.util.List;
 @ToString(exclude = {"authors"})
 @Entity
 public class Book {
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_generator")
-    @SequenceGenerator(name = "book_generator", sequenceName = "book_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
 
