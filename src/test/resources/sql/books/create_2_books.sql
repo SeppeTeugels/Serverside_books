@@ -1,5 +1,4 @@
-insert into BOOK (ID, TITLE)
-values (nextval('BOOK_SEQ'), 'Test Automation'); /*1*/
-
-insert into BOOK (ID, TITLE)
-values (nextval('BOOK_SEQ'), 'REST API Automation Testing from Scratch'); /*2*/
+insert into book (TITLE)
+values ('Test Automation'); /*1*/
+insert into book (TITLE)
+values ('REST API Automation Testing from Scratch'); /*2*/

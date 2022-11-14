@@ -1,3 +1,2 @@
-delete from BOOK;
-alter sequence BOOK_SEQ restart with 1;
-
+delete from  book;
+alter table book alter column id restart with 1;

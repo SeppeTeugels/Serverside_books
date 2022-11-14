@@ -1,5 +1,5 @@
-insert into AUTHOR (ID, NAME)
-values (nextval('AUTHOR_SEQ'), 'Thomas Mann'); /*1*/
+insert into author (NAME)
+values ('Thomas Mann'); /*1*/
 
-insert into AUTHOR (ID, NAME)
-values (nextval('AUTHOR_SEQ'), 'Isaac Asimov'); /*2*/
+insert into author (NAME)
+values ('Isaac Asimov'); /*2*/

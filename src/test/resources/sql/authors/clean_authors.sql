@@ -1,3 +1,3 @@
-delete from AUTHOR;
-alter sequence AUTHOR_SEQ restart with 1;
+delete from  author;
+alter table author alter column id restart with 1;
 
