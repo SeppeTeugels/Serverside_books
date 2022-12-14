@@ -1,4 +1,4 @@
-package be.thomasmore.bookserver.controllers;
+package be.thomasmore.bookserver.model.controllers;
 
 
 import io.swagger.v3.oas.annotations.Operation;

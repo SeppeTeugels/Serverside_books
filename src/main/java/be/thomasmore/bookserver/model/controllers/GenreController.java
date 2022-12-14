@@ -1,4 +1,4 @@
-package be.thomasmore.bookserver.controllers;
+package be.thomasmore.bookserver.model.controllers;
 
 import be.thomasmore.bookserver.model.Genre;
 import be.thomasmore.bookserver.services.GenreService;

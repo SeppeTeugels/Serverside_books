@@ -1,4 +1,4 @@
-package be.thomasmore.bookserver.controllers;
+package be.thomasmore.bookserver.model.controllers;
 
 import be.thomasmore.bookserver.model.User;
 import be.thomasmore.bookserver.model.dto.AuthenticationDTO;
